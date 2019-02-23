@@ -48,6 +48,19 @@ class TeamsController < ApplicationController
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
 
+  def transfer_owner
+    @user = Assign.find(params[:id]).user
+    @team = Team.friendly.find(params[:team_id])
+    @team.owner_id = @user.id
+    if @team.save
+      TeamMailer.team_mail(@user.email, @team).deliver
+      redirect_to @team, notice: 'チームリーダーを変更しました！'
+    else
+      flash.now[:error] = '権限の移動に失敗しました...'
+      render :show
+    end
+  end
+
   private
 
   def set_team

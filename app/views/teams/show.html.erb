@@ -46,6 +46,9 @@
                       <% if assign.user_id == current_user.id || assign.team.owner == current_user %>
                         <td><%= link_to '削除', team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
                       <% end %>
+                      <% if @team.owner == current_user && @team.owner != assign.user %>
+                        <td><%= link_to '権限移動', transfer_owner_team_assign_path(@team, assign), method: :patch, class: 'btn btn-sm btn-danger' %></td>
+                      <% end %>
                     </tr>
                   <% end %>
                 </tbody>

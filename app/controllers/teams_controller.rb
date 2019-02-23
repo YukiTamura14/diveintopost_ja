@@ -52,7 +52,7 @@ class TeamsController < ApplicationController
     @user = Assign.find(params[:id]).user
     @team = Team.friendly.find(params[:team_id])
     @team.owner_id = @user.id
-    if @team.save
+    if @team.update(team_params)
       TeamMailer.team_mail(@user.email, @team).deliver
       redirect_to @team, notice: 'チームリーダーを変更しました！'
     else

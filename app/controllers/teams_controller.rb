@@ -59,6 +59,6 @@ class TeamsController < ApplicationController
   end
 
   def do_not_edit_except_for_owner
-    redirect_to team_url, notice: 'オーナー以外チームの編集はできません。' if @team.owner_id != current_user.id
+    redirect_to team_url, notice: 'オーナー以外チームの編集はできません。' if @team.owner != current_user
   end
 end
